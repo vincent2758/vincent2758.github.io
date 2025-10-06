@@ -1,58 +1,155 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Communist Monarchy of Dunkirk Taritor</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dunkirk Taritor Wiki</title>
     <style>
       body {
-        font-family: 'Georgia', serif;
-        background-color: #f4f4f4;
-        color: #222;
-        text-align: center;
-        padding: 2em;
-      }
-      header {
-        background-color: #a31b1b;
-        color: white;
-        padding: 1.5em 0;
-        border-radius: 10px;
-      }
-      h1 {
+        font-family: "Segoe UI", Tahoma, sans-serif;
         margin: 0;
+        display: flex;
+        height: 100vh;
+        background-color: #f8f9fa;
+      }
+      nav {
+        width: 260px;
+        background-color: #ffffff;
+        border-right: 1px solid #ddd;
+        padding: 1rem;
+        overflow-y: auto;
+      }
+      nav h2 {
+        font-size: 1.2rem;
+        border-bottom: 2px solid #a31b1b;
+        padding-bottom: 5px;
+        margin-bottom: 10px;
       }
       nav a {
-        color: #a31b1b;
-        margin: 0 15px;
+        display: block;
         text-decoration: none;
-        font-weight: bold;
+        color: #333;
+        padding: 5px 0;
+        font-size: 0.95rem;
       }
       nav a:hover {
-        text-decoration: underline;
+        color: #a31b1b;
       }
-      .content {
-        margin-top: 2em;
+      main {
+        flex: 1;
+        padding: 2rem;
+        overflow-y: auto;
+      }
+      header {
+        border-bottom: 2px solid #a31b1b;
+        margin-bottom: 1.5rem;
+      }
+      header h1 {
+        color: #a31b1b;
+        margin: 0;
+      }
+      .article {
+        background-color: white;
+        border-radius: 8px;
+        padding: 1rem 1.5rem;
+        box-shadow: 0 0 6px rgba(0, 0, 0, 0.1);
+      }
+      .article h2 {
+        color: #a31b1b;
+      }
+      footer {
+        text-align: center;
+        padding: 1rem;
+        font-size: 0.8rem;
+        color: #666;
       }
     </style>
   </head>
   <body>
-    <header>
-      <h1>Communist Monarchy of Dunkirk Taritor</h1>
-      <p>Founded by voncelotusofdunkirk</p>
-    </header>
-
     <nav>
-      <a href="#">Home</a>
-      <a href="#">Government</a>
-      <a href="#">Culture</a>
-      <a href="#">History</a>
-      <a href="#">Contact</a>
+      <h2>Contents</h2>
+      <a href="#" onclick="showPage('home')">🏠 Main Page</a>
+      <a href="#" onclick="showPage('government')">🏛️ Government</a>
+      <a href="#" onclick="showPage('culture')">🎭 Culture</a>
+      <a href="#" onclick="showPage('history')">📜 History</a>
+      <a href="#" onclick="showPage('foreign')">🌍 Foreign Relations</a>
+      <a href="#" onclick="showPage('citizenship')">🪪 Citizenship</a>
     </nav>
 
-    <div class="content">
-      <h2>Welcome, citizens and visitors!</h2>
-      <p>The official online portal of Dunkirk Taritor — where unity, tradition, and progress define our monarchy.</p>
-      <p>Check back soon for national news and official decrees.</p>
-    </div>
+    <main>
+      <header>
+        <h1>Communist Monarchy of Dunkirk Taritor Wiki</h1>
+        <p><em>“Knowledge for all citizens.”</em></p>
+      </header>
+
+      <div class="article" id="content"></div>
+
+      <footer>© 2025 Dunkirk Taritor National Archive</footer>
+    </main>
+
+    <script>
+      const pages = {
+        home: `
+          <h2>Welcome to Dunkirk Taritor Wiki</h2>
+          <p>
+            This is the official wiki for the <b>Communist Monarchy of Dunkirk Taritor</b>,
+            documenting its government, culture, history, and people.
+          </p>
+          <p>
+            Use the menu on the left to navigate through national topics.
+          </p>
+        `,
+        government: `
+          <h2>Government of Dunkirk Taritor</h2>
+          <p>
+            The nation operates under a <b>socialist constitutional monarchy</b> led by
+            <b>His Excellency voncelotusofdunkirk</b>.
+          </p>
+          <ul>
+            <li>Head of State: Monarch</li>
+            <li>Head of Government: Premier</li>
+            <li>Legislature: People's Council</li>
+          </ul>
+        `,
+        culture: `
+          <h2>Culture</h2>
+          <p>
+            Dunkirk Taritor's culture blends revolutionary socialist values with royal traditions.
+          </p>
+          <p>
+            Citizens celebrate unity through national holidays and artistic expression.
+          </p>
+        `,
+        history: `
+          <h2>History</h2>
+          <p>
+            Founded in 2024, Dunkirk Taritor began as a movement for equality and self-rule.
+            Since then, it has developed a stable monarchy guided by socialist ideals.
+          </p>
+        `,
+        foreign: `
+          <h2>Foreign Relations</h2>
+          <p>
+            Dunkirk Taritor maintains peaceful relations with neighboring micronations and supports
+            international cooperation.
+          </p>
+        `,
+        citizenship: `
+          <h2>Citizenship</h2>
+          <p>
+            Citizenship may be granted through application to the Ministry of Internal Affairs.
+            All citizens enjoy equal rights and duties.
+          </p>
+        `,
+      };
+
+      function showPage(page) {
+        document.getElementById("content").innerHTML = pages[page];
+      }
+
+      // default page
+      showPage("home");
+    </script>
   </body>
 </html>
+
