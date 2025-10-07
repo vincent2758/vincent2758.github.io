@@ -97,28 +97,31 @@ function updateRate() {
 
     if (lastRate !== null) {
         if (newRate > lastRate) {
-            // 📈 Rate rose — bright, smooth glow
-            box.style.background = "linear-gradient(145deg, #ff3b30, #ff5e57)";
-            box.style.animation = "glowPulse 2.5s ease-in-out infinite";
-            box.style.boxShadow = "0 0 40px rgba(255, 80, 80, 0.8)";
-            box.style.transform = "scale(1.02)"; // gentle “pop”
-            rateElement.style.color = "#b4ffb4";
+            // 📈 Goes up → tilt right and glow
+            box.style.background = "linear-gradient(145deg, #ff4b4b, #ff7676)";
+            box.style.transform = "translateY(-4px) rotate(2deg) scale(1.03)";
+            box.style.boxShadow = "0 12px 30px rgba(255, 80, 80, 0.6)";
+            rateElement.style.color = "#baffba";
         } else if (newRate < lastRate) {
-            // 📉 Rate dropped — dim, moody crimson fade
+            // 📉 Goes down → tilt left and darken
             box.style.background = "linear-gradient(145deg, #5a0000, #7b0000)";
-            box.style.animation = "none";
-            box.style.boxShadow = "0 0 10px rgba(0, 0, 0, 0.6)";
-            box.style.transform = "scale(0.98)";
-            rateElement.style.color = "#ffaaaa";
+            box.style.transform = "translateY(3px) rotate(-2deg) scale(0.97)";
+            box.style.boxShadow = "0 6px 15px rgba(0, 0, 0, 0.6)";
+            rateElement.style.color = "#ffbaba";
         } else {
-            // no change
-            box.style.transform = "scale(1)";
+            // stays the same
+            box.style.transform = "translateY(0px) rotate(0deg) scale(1)";
             rateElement.style.color = "white";
         }
     }
 
     lastRate = newRate;
     document.getElementById("timestamp").textContent = new Date().toLocaleTimeString();
+
+    // return to neutral position smoothly after 1.5s
+    setTimeout(() => {
+        box.style.transform = "translateY(0px) rotate(0deg) scale(1)";
+    }, 1500);
 }
 
 updateRate();
