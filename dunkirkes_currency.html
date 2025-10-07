@@ -26,10 +26,15 @@
         background: radial-gradient(circle at top left, #ff0000, crimson, #660000);
         padding: 25px 35px;
         border-radius: 15px;
-        box-shadow: 0px 8px 20px rgba(0,0,0,0.5);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
         text-align: center;
         width: 300px;
         color: white;
+        transition:
+        background 1.2s cubic-bezier(0.25, 0.1, 0.25, 1),
+        box-shadow 1.2s cubic-bezier(0.25, 0.1, 0.25, 1),
+        transform 0.6s ease,
+        color 0.6s ease;
         text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
         border: 1px solid rgba(255,255,255,0.2);
     }
@@ -55,9 +60,9 @@
         opacity: 0.8;
     }
     @keyframes pulse {
-        0% { background: rgba(255,255,255,0.2); }
-        50% { background: rgba(255,255,255,0.3); }
-        100% { background: rgba(255,255,255,0.2); }
+       0%   { box-shadow: 0 0 20px rgba(255, 80, 80, 0.5); }
+       50%  { box-shadow: 0 0 40px rgba(255, 255, 255, 0.9); }
+       100% { box-shadow: 0 0 20px rgba(255, 80, 80, 0.5); }
     }
 </style>
 </head>
@@ -86,20 +91,33 @@ function generateRate() {
 
 function updateRate() {
     const rateElement = document.getElementById("rate");
+    const box = document.querySelector(".currency-widget");
     const newRate = parseFloat(generateRate());
     rateElement.textContent = newRate;
 
     if (lastRate !== null) {
-        if (newRate < lastRate) {
-            rateElement.style.color = "red"; // Rate dropped
-        } else if (newRate > lastRate) {
-            rateElement.style.color = "green"; // Rate rose
+        if (newRate > lastRate) {
+            // 📈 Rate rose — bright, smooth glow
+            box.style.background = "linear-gradient(145deg, #ff3b30, #ff5e57)";
+            box.style.animation = "glowPulse 2.5s ease-in-out infinite";
+            box.style.boxShadow = "0 0 40px rgba(255, 80, 80, 0.8)";
+            box.style.transform = "scale(1.02)"; // gentle “pop”
+            rateElement.style.color = "#b4ffb4";
+        } else if (newRate < lastRate) {
+            // 📉 Rate dropped — dim, moody crimson fade
+            box.style.background = "linear-gradient(145deg, #5a0000, #7b0000)";
+            box.style.animation = "none";
+            box.style.boxShadow = "0 0 10px rgba(0, 0, 0, 0.6)";
+            box.style.transform = "scale(0.98)";
+            rateElement.style.color = "#ffaaaa";
         } else {
-            rateElement.style.color = "white"; // No change
+            // no change
+            box.style.transform = "scale(1)";
+            rateElement.style.color = "white";
         }
     }
-    lastRate = newRate;
 
+    lastRate = newRate;
     document.getElementById("timestamp").textContent = new Date().toLocaleTimeString();
 }
 
