@@ -59,6 +59,8 @@
 </div>
 
 <script>
+let lastRate = null;
+
 function generateRate() {
     const baseRate = 0.0034564;
     const fluctuation = (Math.random() * 0.0002 - 0.0001).toFixed(7);
@@ -66,7 +68,21 @@ function generateRate() {
 }
 
 function updateRate() {
-    document.getElementById("rate").textContent = generateRate();
+    const rateElement = document.getElementById("rate");
+    const newRate = parseFloat(generateRate());
+    rateElement.textContent = newRate;
+
+    if (lastRate !== null) {
+        if (newRate < lastRate) {
+            rateElement.style.color = "red"; // Rate dropped
+        } else if (newRate > lastRate) {
+            rateElement.style.color = "green"; // Rate rose
+        } else {
+            rateElement.style.color = "white"; // No change
+        }
+    }
+    lastRate = newRate;
+
     document.getElementById("timestamp").textContent = new Date().toLocaleTimeString();
 }
 
