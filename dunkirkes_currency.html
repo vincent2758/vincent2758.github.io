@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Live Currency Rate - Dunkirkes</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background: #f0f2f5;
+        padding: 20px;
+    }
+    h1 {
+        color: #333;
+    }
+    .rate {
+        font-size: 1.3em;
+        margin: 10px 0;
+    }
+</style>
+</head>
+<body>
+<h1>Live Currency Rate</h1>
+<div class="rate">
+    1 Dunkirkes (dk) = <span id="rate">Loading...</span> USD
+</div>
+<div class="rate">
+    Last updated: <span id="timestamp"></span>
+</div>
+
+<script>
+function generateRate() {
+    // Simulate a realistic rate that fluctuates
+    const baseRate = 1.37; // base exchange rate to USD
+    const fluctuation = (Math.random() * 0.05 - 0.025).toFixed(4); // random ±0.025
+    return (baseRate + parseFloat(fluctuation)).toFixed(4);
+}
+
+function updateRate() {
+    const rateElement = document.getElementById("rate");
+    const timestampElement = document.getElementById("timestamp");
+
+    const newRate = generateRate();
+    const now = new Date();
+
+    rateElement.textContent = `${newRate}`;
+    timestampElement.textContent = now.toLocaleTimeString();
+}
+
+// Update every 3 seconds for a "live" effect
+updateRate();
+setInterval(updateRate, 3000);
+</script>
+</body>
+</html>
