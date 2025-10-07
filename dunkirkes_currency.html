@@ -7,7 +7,7 @@
 <style>
     body {
         font-family: "Segoe UI", Arial, sans-serif;
-        background: linear-gradient(135deg, #1e3c72, #2a5298);
+        background: linear-gradient(rgba(255, 255, 0, 0.5), rgba(255, 200, 0, 0.5));
         color: white;
         display: flex;
         justify-content: center;
@@ -31,10 +31,13 @@
     .rate {
         font-size: 1.4em;
         margin: 10px 0;
-        padding: 10px;
-        background: rgba(255, 0, 0, 0.5);
-        border-radius: 8px;
-        animation: pulse 2s infinite;
+        padding: 15px;
+        border-radius: 15px;
+        background: rgba(255, 255, 255, 0.2); /* translucent white */
+        backdrop-filter: blur(10px); /* blur behind the element */
+        -webkit-backdrop-filter: blur(10px); /* for Safari */
+        border: 1px solid rgba(255, 255, 255, 0.3); /* subtle border */
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
         color: white;
     }
     .timestamp {
@@ -89,6 +92,10 @@ function updateRate() {
 
 updateRate();
 setInterval(updateRate, 5000);
+
+    <div class="footer">
+      <p>© 2025 Dunkirk Traitor Ministry of Economy, House of Commons <span style="font-weight:bold;">&#169;</span></p>
+    </div>
 </script>
 </body>
 </html>
