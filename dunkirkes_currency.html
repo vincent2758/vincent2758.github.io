@@ -24,6 +24,7 @@
     }
     .currency-widget {
         background: radial-gradient(circle at top left, #ff0000, crimson, #660000);
+        background-size: 300%
         padding: 25px 35px;
         border-radius: 15px;
         box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
@@ -31,11 +32,10 @@
         animation: float 4s ease-in-out infinite;
         width: 300px;
         color: white;
-        transition:
-        background 1.2s cubic-bezier(0.25, 0.1, 0.25, 1),
-        box-shadow 1.2s cubic-bezier(0.25, 0.1, 0.25, 1),
-        transform 0.6s ease,
-        color 0.6s ease;
+        transition: 
+        background-position 1.5s ease-in-out,
+        background 1s ease-in-out,
+        box-shadow 1s ease-in-out;
         text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
         border: 1px solid rgba(255,255,255,0.2);
     }
@@ -60,10 +60,20 @@
         font-size: 0.9em;
         opacity: 0.8;
     }
-    @keyframes float {
-       0%, 100% { transform: translateY(0px) rotate(0deg); }
-       50% { transform: translateY(-6px) rotate(0.5deg); }
+    @keyframes gradientFlow {
+       0% { background-position: 0% 50%; }
+       50% { background-position: 100% 50%; }
+       100% { background-position: 0% 50%; }
     }
+    .currency-widget {
+    animation: gradientFlow 8s ease-in-out infinite;
+}
+
+/* bright red animation when rate goes up */
+     @keyframes pulseBright {
+        0% { background-position: 0% 50%; }
+        100% { background-position: 100% 50%; }
+}
 </style>
 </head>
 <body>
@@ -97,31 +107,26 @@ function updateRate() {
 
     if (lastRate !== null) {
         if (newRate > lastRate) {
-            // 📈 Goes up → tilt right and glow
-            box.style.background = "linear-gradient(145deg, #ff4b4b, #ff7676)";
-            box.style.transform = "translateY(-4px) rotate(2deg) scale(1.03)";
-            box.style.boxShadow = "0 12px 30px rgba(255, 80, 80, 0.6)";
+            // 📈 rate up: bright flowing light
+            box.style.background = "linear-gradient(120deg, #ff8080, #ff0000, #b30000)";
+            box.style.backgroundSize = "300% 300%";
+            box.style.animation = "gradientFlow 3s ease-in-out infinite";
+            box.style.boxShadow = "0 0 30px rgba(255, 80, 80, 0.8)";
             rateElement.style.color = "#baffba";
         } else if (newRate < lastRate) {
-            // 📉 Goes down → tilt left and darken
-            box.style.background = "linear-gradient(145deg, #5a0000, #7b0000)";
-            box.style.transform = "translateY(3px) rotate(-2deg) scale(0.97)";
-            box.style.boxShadow = "0 6px 15px rgba(0, 0, 0, 0.6)";
+            // 📉 rate down: color slows and darkens
+            box.style.background = "linear-gradient(120deg, #330000, #550000, #220000)";
+            box.style.animation = "none";
+            box.style.boxShadow = "0 0 10px rgba(0, 0, 0, 0.7)";
             rateElement.style.color = "#ffbaba";
         } else {
-            // stays the same
-            box.style.transform = "translateY(0px) rotate(0deg) scale(1)";
+            // stays neutral
             rateElement.style.color = "white";
         }
     }
 
     lastRate = newRate;
     document.getElementById("timestamp").textContent = new Date().toLocaleTimeString();
-
-    // return to neutral position smoothly after 1.5s
-    setTimeout(() => {
-        box.style.transform = "translateY(0px) rotate(0deg) scale(1)";
-    }, 1500);
 }
 
 updateRate();
