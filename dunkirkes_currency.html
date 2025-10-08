@@ -31,32 +31,32 @@
         overflow: hidden;
         backdrop-filter: blur(10px);
         -webkit-backdrop-filter: blur(10px);
+        transition: box-shadow 1s ease, transform 1s ease;
     }
 
-    /* 🔥 The moving “liquid” layers inside the box */
+    /* 🔥 Liquid “molten” layers */
     .currency-widget::before,
     .currency-widget::after {
         content: "";
         position: absolute;
-        top: 0;
-        left: 0;
+        top: 0; left: 0;
         width: 200%;
         height: 200%;
         background: radial-gradient(circle at 30% 30%, rgba(255, 0, 0, 0.6), transparent 60%),
-                    radial-gradient(circle at 70% 70%, rgba(255, 255, 0, 0.5), transparent 60%),
+                    radial-gradient(circle at 70% 70%, rgba(255, 255, 0, 0.4), transparent 60%),
                     radial-gradient(circle at 60% 40%, rgba(255, 100, 100, 0.6), transparent 60%);
         background-blend-mode: screen;
         filter: blur(40px);
-        animation: liquidMove 10s ease-in-out infinite alternate;
-        -webkit-animation: liquidMove 10s ease-in-out infinite alternate;
         z-index: 0;
+        transition: filter 1s ease, opacity 1s ease;
+        animation: liquidMove 10s ease-in-out infinite alternate;
     }
 
     .currency-widget::after {
         background: radial-gradient(circle at 40% 60%, rgba(255, 255, 255, 0.25), transparent 70%),
                     radial-gradient(circle at 60% 40%, rgba(255, 0, 0, 0.4), transparent 70%);
         animation: liquidMove2 12s ease-in-out infinite alternate-reverse;
-        -webkit-animation: liquidMove2 12s ease-in-out infinite alternate-reverse;
+        opacity: 0.7;
     }
 
     @keyframes liquidMove {
@@ -75,7 +75,7 @@
     .rate,
     .timestamp {
         position: relative;
-        z-index: 2; /* Keep text above animation */
+        z-index: 2; /* text above animation */
     }
 
     .rate {
@@ -87,7 +87,7 @@
         border: 1px solid rgba(255, 255, 255, 0.25);
         backdrop-filter: blur(8px);
         color: white;
-        transition: color 0.8s ease;
+        transition: color 0.6s ease;
     }
 
     .timestamp {
@@ -130,16 +130,33 @@ function generateRate() {
 function updateRate() {
     const rateElement = document.getElementById("rate");
     const box = document.getElementById("currencyBox");
+    const liquid1 = box.querySelector("::before");
     const newRate = parseFloat(generateRate());
-
     rateElement.textContent = newRate;
 
+    const pseudoBefore = getComputedStyle(box, "::before");
+    const pseudoAfter = getComputedStyle(box, "::after");
+
+    // When rate changes, animate intensity and color glow
     if (lastRate !== null) {
         if (newRate > lastRate) {
+            // 📈 Rate up: speed up, brighten, glow stronger
+            box.style.boxShadow = "0 0 30px rgba(255, 150, 150, 0.8)";
+            box.style.transform = "scale(1.02)";
             rateElement.style.color = "#baffba";
+            box.style.setProperty("--speed1", "5s");
+            box.style.setProperty("--speed2", "6s");
+            box.style.setProperty("--blur", "25px");
         } else if (newRate < lastRate) {
+            // 📉 Rate down: slow down, darken, less glow
+            box.style.boxShadow = "0 0 10px rgba(0, 0, 0, 0.5)";
+            box.style.transform = "scale(0.98)";
             rateElement.style.color = "#ffbaba";
+            box.style.setProperty("--speed1", "14s");
+            box.style.setProperty("--speed2", "18s");
+            box.style.setProperty("--blur", "55px");
         } else {
+            box.style.transform = "scale(1)";
             rateElement.style.color = "white";
         }
     }
