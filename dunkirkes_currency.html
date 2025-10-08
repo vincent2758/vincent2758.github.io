@@ -33,8 +33,8 @@
     }
 
     .currency-widget {
-        background: radial-gradient(circle at top left, #ff0000, crimson, #660000);
-        background-size: 300%;
+        background: linear-gradient(120deg, #b30000, #ff0000, #660000);
+        background-size: 300% 300%;
         padding: 25px 35px;
         border-radius: 15px;
         box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
@@ -42,12 +42,10 @@
         animation: gradientFlow 8s ease-in-out infinite, float 4s ease-in-out infinite;
         width: 300px;
         color: white;
-        transition: 
-        background-position 1.5s ease-in-out,
-        background 1s ease-in-out,
-        box-shadow 1s ease-in-out;
         text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
         border: 1px solid rgba(255,255,255,0.2);
+        transition: background 2s ease-in-out, box-shadow 1.5s ease, color 0.8s ease, filter 1.5s ease;
+        filter: brightness(1);
     }
 
     @keyframes gradientFlow {
@@ -84,12 +82,6 @@
         font-size: 0.9em;
         opacity: 0.8;
     }
-
-    /* pulse for bright moment */
-    @keyframes pulseBright {
-        0% { background-position: 0% 50%; }
-        100% { background-position: 100% 50%; }
-    }
 </style>
 </head>
 <body>
@@ -121,19 +113,23 @@ function updateRate() {
     const newRate = parseFloat(generateRate());
     rateElement.textContent = newRate;
 
+    // Transition logic
     if (lastRate !== null) {
         if (newRate > lastRate) {
-            box.style.background = "linear-gradient(120deg, #ff8080, #ff0000, #b30000)";
-            box.style.backgroundSize = "300% 300%";
-            box.style.animation = "gradientFlow 3s ease-in-out infinite, float 4s ease-in-out infinite";
-            box.style.boxShadow = "0 0 30px rgba(255, 80, 80, 0.8)";
+            // 📈 Smoothly shift to bright red tones
+            box.style.background = "linear-gradient(120deg, #ffb3b3, #ff4d4d, #b30000)";
+            box.style.boxShadow = "0 0 25px rgba(255, 120, 120, 0.7)";
+            box.style.filter = "brightness(1.2)";
             rateElement.style.color = "#baffba";
         } else if (newRate < lastRate) {
-            box.style.background = "linear-gradient(120deg, #330000, #550000, #220000)";
-            box.style.animation = "none";
-            box.style.boxShadow = "0 0 10px rgba(0, 0, 0, 0.7)";
+            // 📉 Slowly darken tones
+            box.style.background = "linear-gradient(120deg, #440000, #330000, #220000)";
+            box.style.boxShadow = "0 0 15px rgba(0, 0, 0, 0.6)";
+            box.style.filter = "brightness(0.8)";
             rateElement.style.color = "#ffbaba";
         } else {
+            // Neutral
+            box.style.filter = "brightness(1)";
             rateElement.style.color = "white";
         }
     }
@@ -141,6 +137,12 @@ function updateRate() {
     lastRate = newRate;
     document.getElementById("timestamp").textContent = new Date().toLocaleTimeString();
 }
+
+updateRate();
+setInterval(updateRate, 5000);
+</script>
+</body>
+</html>
 
 updateRate();
 setInterval(updateRate, 5000);
