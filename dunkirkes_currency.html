@@ -5,164 +5,191 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Live Dunkrikes → Ghabes Rate</title>
 <style>
-    body {
-        font-family: "Segoe UI", Arial, sans-serif;
-        background: radial-gradient(circle at top, #8b0000, #330000);
-        color: white;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        margin: 0;
-        overflow: hidden;
-    }
+  body {
+    font-family: "Segoe UI", Arial, sans-serif;
+    background: radial-gradient(circle at top, #8b0000, #330000);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    overflow: hidden;
+  }
 
-    .currency-widget {
-        position: relative;
-        width: 300px;
-        padding: 25px 35px;
-        border-radius: 20px;
-        text-align: center;
-        color: white;
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
-        border: 1px solid rgba(255,255,255,0.2);
-        text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
-        overflow: hidden;
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        transition: box-shadow 1s ease, transform 1s ease;
-    }
+  .currency-widget {
+    position: relative;
+    width: 300px;
+    padding: 25px 35px;
+    border-radius: 20px;
+    text-align: center;
+    color: white;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+    border: 1px solid rgba(255,255,255,0.2);
+    text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+    overflow: hidden;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: box-shadow 1.2s ease, transform 1.2s ease;
+  }
 
-    /* 🔥 Liquid “molten” layers */
-    .currency-widget::before,
-    .currency-widget::after {
-        content: "";
-        position: absolute;
-        top: 0; left: 0;
-        width: 200%;
-        height: 200%;
-        background: radial-gradient(circle at 30% 30%, rgba(255, 0, 0, 0.6), transparent 60%),
-                    radial-gradient(circle at 70% 70%, rgba(255, 255, 0, 0.4), transparent 60%),
-                    radial-gradient(circle at 60% 40%, rgba(255, 100, 100, 0.6), transparent 60%);
-        background-blend-mode: screen;
-        filter: blur(40px);
-        z-index: 0;
-        transition: filter 1s ease, opacity 1s ease;
-        animation: liquidMove 10s ease-in-out infinite alternate;
-    }
+  /* Liquid layers */
+  .currency-widget::before,
+  .currency-widget::after {
+    content: "";
+    position: absolute;
+    top: 0; left: 0;
+    width: 200%;
+    height: 200%;
+    filter: blur(var(--blur, 40px));
+    z-index: 0;
+    opacity: 0.8;
+    transition: filter 1.5s ease, opacity 1.5s ease;
+  }
 
-    .currency-widget::after {
-        background: radial-gradient(circle at 40% 60%, rgba(255, 255, 255, 0.25), transparent 70%),
-                    radial-gradient(circle at 60% 40%, rgba(255, 0, 0, 0.4), transparent 70%);
-        animation: liquidMove2 12s ease-in-out infinite alternate-reverse;
-        opacity: 0.7;
-    }
+  .currency-widget::before {
+    background: radial-gradient(circle at 30% 30%, rgba(255, 0, 0, 0.6), transparent 60%),
+                radial-gradient(circle at 70% 70%, rgba(255, 255, 0, 0.4), transparent 60%),
+                radial-gradient(circle at 60% 40%, rgba(255, 100, 100, 0.6), transparent 60%);
+    background-blend-mode: screen;
+    animation: liquidMove var(--speed1, 10s) ease-in-out infinite alternate;
+  }
 
-    @keyframes liquidMove {
-        0% { transform: translate(0%, 0%) rotate(0deg); }
-        50% { transform: translate(-25%, -10%) rotate(20deg); }
-        100% { transform: translate(10%, 10%) rotate(-10deg); }
-    }
+  .currency-widget::after {
+    background: radial-gradient(circle at 40% 60%, rgba(255, 255, 255, 0.25), transparent 70%),
+                radial-gradient(circle at 60% 40%, rgba(255, 0, 0, 0.4), transparent 70%);
+    animation: liquidMove2 var(--speed2, 12s) ease-in-out infinite alternate-reverse;
+  }
 
-    @keyframes liquidMove2 {
-        0% { transform: translate(10%, -10%) rotate(0deg); }
-        50% { transform: translate(-20%, 20%) rotate(15deg); }
-        100% { transform: translate(5%, -5%) rotate(-15deg); }
-    }
+  @keyframes liquidMove {
+    0% { transform: translate(0%, 0%) rotate(0deg); }
+    50% { transform: translate(-25%, -10%) rotate(20deg); }
+    100% { transform: translate(10%, 10%) rotate(-10deg); }
+  }
 
-    .currency-widget h1,
-    .rate,
-    .timestamp {
-        position: relative;
-        z-index: 2; /* text above animation */
-    }
+  @keyframes liquidMove2 {
+    0% { transform: translate(10%, -10%) rotate(0deg); }
+    50% { transform: translate(-20%, 20%) rotate(15deg); }
+    100% { transform: translate(5%, -5%) rotate(-15deg); }
+  }
 
-    .rate {
-        font-size: 1.4em;
-        margin: 10px 0;
-        padding: 15px;
-        border-radius: 15px;
-        background: rgba(255, 255, 255, 0.15);
-        border: 1px solid rgba(255, 255, 255, 0.25);
-        backdrop-filter: blur(8px);
-        color: white;
-        transition: color 0.6s ease;
-    }
+  .currency-widget h1,
+  .rate,
+  .timestamp {
+    position: relative;
+    z-index: 2; /* text above the animation */
+  }
 
-    .timestamp {
-        font-size: 0.9em;
-        opacity: 0.8;
-    }
+  .rate {
+    font-size: 1.4em;
+    margin: 10px 0;
+    padding: 15px;
+    border-radius: 15px;
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    backdrop-filter: blur(8px);
+    transition: color 0.6s ease;
+  }
 
-    .footer {
-        margin-top: 20px;
-        font-size: 0.85em;
-        opacity: 0.8;
-        text-align: center;
+  .timestamp {
+    font-size: 0.9em;
+    opacity: 0.8;
+  }
+
+  .footer {
+    margin-top: 20px;
+    font-size: 0.85em;
+    opacity: 0.8;
+    text-align: center;
+  }
+
+  /* Arrow animations */
+  .arrow {
+    display: inline-block;
+    margin-left: 8px;
+    font-size: 1.2em;
+    vertical-align: middle;
+    opacity: 0;
+    transform: translateY(5px);
+    animation: pop 0.6s ease forwards;
+  }
+
+  @keyframes pop {
+    to {
+      opacity: 1;
+      transform: translateY(0);
     }
+  }
 </style>
 </head>
 <body>
 <div class="currency-widget" id="currencyBox">
-    <h1>Live Rate</h1>
-    <div class="rate">
-        1 Dunkrikes (dk) = <span id="rate">Loading...</span> Ghabes (Gh)
-    </div>
-    <div class="timestamp">
-        Last updated: <span id="timestamp"></span>
-    </div>
+  <h1>Live Rate</h1>
+  <div class="rate">
+    1 Dunkrikes (dk) = <span id="rate">Loading...</span> Ghabes (Gh)
+  </div>
+  <div class="timestamp">
+    Last updated: <span id="timestamp"></span>
+  </div>
 </div>
 
 <div class="footer">
-    <p>© 2025 Dunkirk Traitor Ministry of Economy, House of Commons <span style="font-weight:bold;">&#169;</span></p>
+  <p>© 2025 Dunkirk Traitor Ministry of Economy, House of Commons <span style="font-weight:bold;">&#169;</span></p>
 </div>
 
 <script>
 let lastRate = null;
 
 function generateRate() {
-    const baseRate = 0.0034564;
-    const fluctuation = (Math.random() * 0.0002 - 0.0001).toFixed(7);
-    return (baseRate + parseFloat(fluctuation)).toFixed(7);
+  const baseRate = 0.0034564;
+  const fluctuation = (Math.random() * 0.0002 - 0.0001);
+  return parseFloat((baseRate + fluctuation).toFixed(7));
 }
 
 function updateRate() {
-    const rateElement = document.getElementById("rate");
-    const box = document.getElementById("currencyBox");
-    const liquid1 = box.querySelector("::before");
-    const newRate = parseFloat(generateRate());
-    rateElement.textContent = newRate;
+  const rateEl = document.getElementById("rate");
+  const box = document.getElementById("currencyBox");
+  const newRate = generateRate();
 
-    const pseudoBefore = getComputedStyle(box, "::before");
-    const pseudoAfter = getComputedStyle(box, "::after");
+  // Clear old arrows
+  const oldArrow = document.querySelector(".arrow");
+  if (oldArrow) oldArrow.remove();
 
-    // When rate changes, animate intensity and color glow
-    if (lastRate !== null) {
-        if (newRate > lastRate) {
-            // 📈 Rate up: speed up, brighten, glow stronger
-            box.style.boxShadow = "0 0 30px rgba(255, 150, 150, 0.8)";
-            box.style.transform = "scale(1.02)";
-            rateElement.style.color = "#baffba";
-            box.style.setProperty("--speed1", "5s");
-            box.style.setProperty("--speed2", "6s");
-            box.style.setProperty("--blur", "25px");
-        } else if (newRate < lastRate) {
-            // 📉 Rate down: slow down, darken, less glow
-            box.style.boxShadow = "0 0 10px rgba(0, 0, 0, 0.5)";
-            box.style.transform = "scale(0.98)";
-            rateElement.style.color = "#ffbaba";
-            box.style.setProperty("--speed1", "14s");
-            box.style.setProperty("--speed2", "18s");
-            box.style.setProperty("--blur", "55px");
-        } else {
-            box.style.transform = "scale(1)";
-            rateElement.style.color = "white";
-        }
+  let arrow = document.createElement("span");
+  arrow.classList.add("arrow");
+
+  rateEl.textContent = newRate;
+
+  if (lastRate !== null) {
+    if (newRate > lastRate) {
+      // 📈 Dunkrikes stronger (Ghabes weaker)
+      box.style.setProperty("--speed1", "6s");
+      box.style.setProperty("--speed2", "8s");
+      box.style.setProperty("--blur", "25px");
+      box.style.boxShadow = "0 0 30px rgba(255, 150, 150, 0.8)";
+      box.style.transform = "scale(1.03)";
+      rateEl.style.color = "#baffba";
+      arrow.textContent = "📈";
+    } else if (newRate < lastRate) {
+      // 📉 Dunkrikes weaker (Ghabes stronger)
+      box.style.setProperty("--speed1", "14s");
+      box.style.setProperty("--speed2", "18s");
+      box.style.setProperty("--blur", "55px");
+      box.style.boxShadow = "0 0 10px rgba(0, 0, 0, 0.5)";
+      box.style.transform = "scale(0.98)";
+      rateEl.style.color = "#ffbaba";
+      arrow.textContent = "📉";
+    } else {
+      rateEl.style.color = "white";
+      box.style.transform = "scale(1)";
+      arrow.textContent = "⏺️";
     }
+  }
 
-    lastRate = newRate;
-    document.getElementById("timestamp").textContent = new Date().toLocaleTimeString();
+  rateEl.after(arrow);
+  lastRate = newRate;
+  document.getElementById("timestamp").textContent = new Date().toLocaleTimeString();
 }
 
 updateRate();
