@@ -7,7 +7,7 @@
 <style>
     body {
         font-family: "Segoe UI", Arial, sans-serif;
-        background: linear-gradient(#8b0000, #ff0000);
+        background: radial-gradient(circle at top, #8b0000, #330000);
         color: white;
         display: flex;
         flex-direction: column;
@@ -15,44 +15,67 @@
         align-items: center;
         height: 100vh;
         margin: 0;
-        -webkit-font-smoothing: antialiased;
+        overflow: hidden;
     }
 
     .currency-widget {
-        background: linear-gradient(120deg, #ff4d4d, #b30000, #660000);
-        background-size: 300% 300%;
+        position: relative;
+        width: 300px;
         padding: 25px 35px;
         border-radius: 20px;
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
         text-align: center;
         color: white;
-        text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
         border: 1px solid rgba(255,255,255,0.2);
-        width: 300px;
-        transition:
-            background 1.5s ease,
-            box-shadow 1.5s ease;
-        animation: slowPulse 10s ease-in-out infinite;
-        -webkit-animation: slowPulse 10s ease-in-out infinite;
-        will-change: background-position;
+        text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
+        overflow: hidden;
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
     }
 
-    @keyframes slowPulse {
-        0% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
+    /* 🔥 The moving “liquid” layers inside the box */
+    .currency-widget::before,
+    .currency-widget::after {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle at 30% 30%, rgba(255, 0, 0, 0.6), transparent 60%),
+                    radial-gradient(circle at 70% 70%, rgba(255, 255, 0, 0.5), transparent 60%),
+                    radial-gradient(circle at 60% 40%, rgba(255, 100, 100, 0.6), transparent 60%);
+        background-blend-mode: screen;
+        filter: blur(40px);
+        animation: liquidMove 10s ease-in-out infinite alternate;
+        -webkit-animation: liquidMove 10s ease-in-out infinite alternate;
+        z-index: 0;
     }
 
-    @-webkit-keyframes slowPulse {
-        0% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
+    .currency-widget::after {
+        background: radial-gradient(circle at 40% 60%, rgba(255, 255, 255, 0.25), transparent 70%),
+                    radial-gradient(circle at 60% 40%, rgba(255, 0, 0, 0.4), transparent 70%);
+        animation: liquidMove2 12s ease-in-out infinite alternate-reverse;
+        -webkit-animation: liquidMove2 12s ease-in-out infinite alternate-reverse;
     }
 
-    .currency-widget h1 {
-        font-size: 1.5em;
-        margin-bottom: 15px;
-        font-weight: 600;
+    @keyframes liquidMove {
+        0% { transform: translate(0%, 0%) rotate(0deg); }
+        50% { transform: translate(-25%, -10%) rotate(20deg); }
+        100% { transform: translate(10%, 10%) rotate(-10deg); }
+    }
+
+    @keyframes liquidMove2 {
+        0% { transform: translate(10%, -10%) rotate(0deg); }
+        50% { transform: translate(-20%, 20%) rotate(15deg); }
+        100% { transform: translate(5%, -5%) rotate(-15deg); }
+    }
+
+    .currency-widget h1,
+    .rate,
+    .timestamp {
+        position: relative;
+        z-index: 2; /* Keep text above animation */
     }
 
     .rate {
@@ -60,13 +83,11 @@
         margin: 10px 0;
         padding: 15px;
         border-radius: 15px;
-        background: rgba(255, 255, 255, 0.2);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.3);
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        background: rgba(255, 255, 255, 0.15);
+        border: 1px solid rgba(255, 255, 255, 0.25);
+        backdrop-filter: blur(8px);
         color: white;
-        transition: color 0.5s ease;
+        transition: color 0.8s ease;
     }
 
     .timestamp {
@@ -115,16 +136,8 @@ function updateRate() {
 
     if (lastRate !== null) {
         if (newRate > lastRate) {
-            // 📈 Smoothly brighten
-            box.style.background = "linear-gradient(120deg, #ff8080, #ff0000, #b30000)";
-            box.style.backgroundSize = "300% 300%";
-            box.style.boxShadow = "0 0 25px rgba(255, 150, 150, 0.8)";
             rateElement.style.color = "#baffba";
         } else if (newRate < lastRate) {
-            // 📉 Smoothly darken
-            box.style.background = "linear-gradient(120deg, #220000, #440000, #220000)";
-            box.style.backgroundSize = "300% 300%";
-            box.style.boxShadow = "0 0 10px rgba(0, 0, 0, 0.6)";
             rateElement.style.color = "#ffbaba";
         } else {
             rateElement.style.color = "white";
@@ -140,4 +153,5 @@ setInterval(updateRate, 5000);
 </script>
 </body>
 </html>
+
 
