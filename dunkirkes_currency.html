@@ -7,7 +7,9 @@
 <style>
     body {
         font-family: "Segoe UI", Arial, sans-serif;
-        background: linear-gradient(#8b0000, #ff0000);
+        background: linear-gradient(120deg, #300000, #8b0000, #ff0000, #660000);
+        background-size: 400% 400%;
+        animation: darkFlow 15s ease-in-out infinite;
         color: white;
         display: flex;
         flex-direction: column;
@@ -16,20 +18,28 @@
         height: 100vh;
         margin: 0;
     }
-    .footer {
-    margin-top: 20px;     
-    font-size: 0.85em;  
-    opacity: 0.8;         
-    text-align: center;
+
+    @keyframes darkFlow {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
     }
+
+    .footer {
+        margin-top: 20px;     
+        font-size: 0.85em;  
+        opacity: 0.8;         
+        text-align: center;
+    }
+
     .currency-widget {
         background: radial-gradient(circle at top left, #ff0000, crimson, #660000);
-        background-size: 300%
+        background-size: 300%;
         padding: 25px 35px;
         border-radius: 15px;
         box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
         text-align: center;
-        animation: float 4s ease-in-out infinite;
+        animation: gradientFlow 8s ease-in-out infinite, float 4s ease-in-out infinite;
         width: 300px;
         color: white;
         transition: 
@@ -39,41 +49,47 @@
         text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
         border: 1px solid rgba(255,255,255,0.2);
     }
+
+    @keyframes gradientFlow {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+
+    @keyframes float {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-10px); }
+    }
+
     .currency-widget h1 {
         font-size: 1.5em;
         margin-bottom: 15px;
         font-weight: 600;
     }
+
     .rate {
         font-size: 1.4em;
         margin: 10px 0;
         padding: 15px;
         border-radius: 15px;
-        background: rgba(255, 255, 255, 0.2); /* translucent white */
-        backdrop-filter: blur(10px); /* blur behind the element */
-        -webkit-backdrop-filter: blur(10px); /* for Safari */
-        border: 1px solid rgba(255, 255, 255, 0.3); /* subtle border */
+        background: rgba(255, 255, 255, 0.2);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
         box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
         color: white;
     }
+
     .timestamp {
         font-size: 0.9em;
         opacity: 0.8;
     }
-    @keyframes gradientFlow {
-       0% { background-position: 0% 50%; }
-       50% { background-position: 100% 50%; }
-       100% { background-position: 0% 50%; }
-    }
-    .currency-widget {
-    animation: gradientFlow 8s ease-in-out infinite;
-}
 
-/* bright red animation when rate goes up */
-     @keyframes pulseBright {
+    /* pulse for bright moment */
+    @keyframes pulseBright {
         0% { background-position: 0% 50%; }
         100% { background-position: 100% 50%; }
-}
+    }
 </style>
 </head>
 <body>
@@ -86,9 +102,9 @@
         Last updated: <span id="timestamp"></span>
     </div>
 </div>
-    <div class="footer">
-      <p>© 2025 Dunkirk Traitor Ministry of Economy, House of Commons <span style="font-weight:bold;">&#169;</span></p>
-    </div>
+<div class="footer">
+    <p>© 2025 Dunkirk Traitor Ministry of Economy, House of Commons <span style="font-weight:bold;">&#169;</span></p>
+</div>
 
 <script>
 let lastRate = null;
@@ -107,20 +123,17 @@ function updateRate() {
 
     if (lastRate !== null) {
         if (newRate > lastRate) {
-            // 📈 rate up: bright flowing light
             box.style.background = "linear-gradient(120deg, #ff8080, #ff0000, #b30000)";
             box.style.backgroundSize = "300% 300%";
-            box.style.animation = "gradientFlow 3s ease-in-out infinite";
+            box.style.animation = "gradientFlow 3s ease-in-out infinite, float 4s ease-in-out infinite";
             box.style.boxShadow = "0 0 30px rgba(255, 80, 80, 0.8)";
             rateElement.style.color = "#baffba";
         } else if (newRate < lastRate) {
-            // 📉 rate down: color slows and darkens
             box.style.background = "linear-gradient(120deg, #330000, #550000, #220000)";
             box.style.animation = "none";
             box.style.boxShadow = "0 0 10px rgba(0, 0, 0, 0.7)";
             rateElement.style.color = "#ffbaba";
         } else {
-            // stays neutral
             rateElement.style.color = "white";
         }
     }
@@ -134,4 +147,3 @@ setInterval(updateRate, 5000);
 </script>
 </body>
 </html>
-
