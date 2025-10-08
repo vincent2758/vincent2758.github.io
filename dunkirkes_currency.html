@@ -1,151 +1,155 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Live Dunkrikes → Ghabes Rate</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Dunkirk Taritor | Live Dunkrikes → Ghabes Rate</title>
 <style>
-    body {
-        font-family: "Segoe UI", Arial, sans-serif;
-        background: linear-gradient(120deg, #300000, #8b0000, #ff0000, #660000);
-        background-size: 400% 400%;
-        animation: darkFlow 15s ease-in-out infinite;
-        color: white;
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        margin: 0;
-    }
+/* ---------- GENERAL STYLES ---------- */
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: "Segoe UI", Arial, sans-serif;
+  color: #fff;
+  background: linear-gradient(120deg, #300000, #8b0000, #ff0000, #660000);
+  background-size: 400% 400%;
+  animation: bgFlow 20s ease-in-out infinite;
+}
 
-    @keyframes darkFlow {
-        0% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
-    }
+/* Smooth background movement */
+@keyframes bgFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
 
-    .footer {
-        margin-top: 20px;     
-        font-size: 0.85em;  
-        opacity: 0.8;         
-        text-align: center;
-    }
+/* ---------- CURRENCY WIDGET ---------- */
+.currency-widget {
+  width: 320px;
+  padding: 30px;
+  border-radius: 20px;
+  text-align: center;
+  background: linear-gradient(135deg, #b30000, #ff0000, #660000);
+  background-size: 300% 300%;
+  animation: gradientFlow 10s ease-in-out infinite, float 4s ease-in-out infinite;
+  box-shadow: 0 0 25px rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  transition: background 2s ease-in-out, box-shadow 1.5s ease, filter 1.5s ease, color 1s ease;
+  filter: brightness(1);
+}
 
-    .currency-widget {
-        background: linear-gradient(120deg, #b30000, #ff0000, #660000);
-        background-size: 300% 300%;
-        padding: 25px 35px;
-        border-radius: 15px;
-        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25);
-        text-align: center;
-        animation: gradientFlow 8s ease-in-out infinite, float 4s ease-in-out infinite;
-        width: 300px;
-        color: white;
-        text-shadow: 0 1px 4px rgba(0, 0, 0, 0.4);
-        border: 1px solid rgba(255,255,255,0.2);
-        transition: background 2s ease-in-out, box-shadow 1.5s ease, color 0.8s ease, filter 1.5s ease;
-        filter: brightness(1);
-    }
+/* Internal animations */
+@keyframes gradientFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
 
-    @keyframes gradientFlow {
-        0% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
-    }
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-10px); }
+}
 
-    @keyframes float {
-        0%, 100% { transform: translateY(0px); }
-        50% { transform: translateY(-10px); }
-    }
+.currency-widget h1 {
+  font-size: 1.6em;
+  margin-bottom: 15px;
+  letter-spacing: 1px;
+}
 
-    .currency-widget h1 {
-        font-size: 1.5em;
-        margin-bottom: 15px;
-        font-weight: 600;
-    }
+.rate {
+  font-size: 1.4em;
+  padding: 15px;
+  margin-bottom: 10px;
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+  transition: color 1s ease;
+}
 
-    .rate {
-        font-size: 1.4em;
-        margin: 10px 0;
-        padding: 15px;
-        border-radius: 15px;
-        background: rgba(255, 255, 255, 0.2);
-        backdrop-filter: blur(10px);
-        -webkit-backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.3);
-        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-        color: white;
-    }
+.timestamp {
+  font-size: 0.9em;
+  opacity: 0.8;
+}
 
-    .timestamp {
-        font-size: 0.9em;
-        opacity: 0.8;
-    }
+/* ---------- FOOTER ---------- */
+.footer {
+  margin-top: 30px;
+  font-size: 0.85em;
+  opacity: 0.8;
+  text-align: center;
+}
+
+/* ---------- COLOR STATES ---------- */
+.bright {
+  background: linear-gradient(120deg, #ffb3b3, #ff4d4d, #b30000);
+  box-shadow: 0 0 25px rgba(255, 120, 120, 0.7);
+  filter: brightness(1.2);
+}
+
+.dark {
+  background: linear-gradient(120deg, #440000, #330000, #220000);
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.6);
+  filter: brightness(0.8);
+}
 </style>
 </head>
 <body>
-<div class="currency-widget">
-    <h1>Live Rate</h1>
-    <div class="rate">
-        1 Dunkrikes (dk) = <span id="rate">Loading...</span> Ghabes (Gh)
-    </div>
-    <div class="timestamp">
-        Last updated: <span id="timestamp"></span>
-    </div>
+
+<div class="currency-widget" id="currencyBox">
+  <h1>Live Rate</h1>
+  <div class="rate">1 Dunkrikes (dk) = <span id="rate">Loading...</span> Ghabes (Gh)</div>
+  <div class="timestamp">Last updated: <span id="timestamp"></span></div>
 </div>
+
 <div class="footer">
-    <p>© 2025 Dunkirk Traitor Ministry of Economy, House of Commons <span style="font-weight:bold;">&#169;</span></p>
+  © 2025 Dunkirk Taritor Ministry of Economy — House of Commons <span style="font-weight:bold;">&#169;</span>
 </div>
 
 <script>
 let lastRate = null;
 
 function generateRate() {
-    const baseRate = 0.0034564;
-    const fluctuation = (Math.random() * 0.0002 - 0.0001).toFixed(7);
-    return (baseRate + parseFloat(fluctuation)).toFixed(7);
+  const baseRate = 0.0034564;
+  const fluctuation = (Math.random() * 0.0002 - 0.0001).toFixed(7);
+  return (baseRate + parseFloat(fluctuation)).toFixed(7);
 }
 
 function updateRate() {
-    const rateElement = document.getElementById("rate");
-    const box = document.querySelector(".currency-widget");
-    const newRate = parseFloat(generateRate());
-    rateElement.textContent = newRate;
+  const rateElement = document.getElementById("rate");
+  const box = document.getElementById("currencyBox");
+  const newRate = parseFloat(generateRate());
+  rateElement.textContent = newRate;
 
-    // Transition logic
-    if (lastRate !== null) {
-        if (newRate > lastRate) {
-            // 📈 Smoothly shift to bright red tones
-            box.style.background = "linear-gradient(120deg, #ffb3b3, #ff4d4d, #b30000)";
-            box.style.boxShadow = "0 0 25px rgba(255, 120, 120, 0.7)";
-            box.style.filter = "brightness(1.2)";
-            rateElement.style.color = "#baffba";
-        } else if (newRate < lastRate) {
-            // 📉 Slowly darken tones
-            box.style.background = "linear-gradient(120deg, #440000, #330000, #220000)";
-            box.style.boxShadow = "0 0 15px rgba(0, 0, 0, 0.6)";
-            box.style.filter = "brightness(0.8)";
-            rateElement.style.color = "#ffbaba";
-        } else {
-            // Neutral
-            box.style.filter = "brightness(1)";
-            rateElement.style.color = "white";
-        }
+  // Remove any old classes first
+  box.classList.remove("bright", "dark");
+
+  if (lastRate !== null) {
+    if (newRate > lastRate) {
+      box.classList.add("bright");
+      rateElement.style.color = "#baffba";
+    } else if (newRate < lastRate) {
+      box.classList.add("dark");
+      rateElement.style.color = "#ffbaba";
+    } else {
+      rateElement.style.color = "white";
     }
+  }
 
-    lastRate = newRate;
-    document.getElementById("timestamp").textContent = new Date().toLocaleTimeString();
+  lastRate = newRate;
+  document.getElementById("timestamp").textContent = new Date().toLocaleTimeString();
 }
 
+// Initialize and repeat
 updateRate();
 setInterval(updateRate, 5000);
 </script>
 </body>
 </html>
 
-updateRate();
-setInterval(updateRate, 5000);
-</script>
-</body>
-</html>
