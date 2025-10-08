@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Royal Decree — King Voncelotus I</title>
+  <style>
+    /* Paper / parchment base */
+    :root{
+      --paper:#f3e6cf;
+      --edge:#d9b87a;
+      --ink:#2b1f14;
+      --accent:#b8860b;
+      --shadow:rgba(16,10,6,0.18);
+      --crest-size:120px;
+    }
+    html,body{height:100%;margin:0}
+    body{
+      display:flex;align-items:center;justify-content:center;
+      background: radial-gradient(1200px 800px at 10% 10%, rgba(0,0,0,0.25), transparent 10%),
+                  linear-gradient(180deg,#0f0b08 0%, #261a11 100%);
+      font-family: Georgia, 'Times New Roman', Times, serif;
+      -webkit-font-smoothing:antialiased;color:var(--ink);
+      padding:32px;
+    }
+
+    .parchment-wrap{
+      width:min(1000px, 92%);
+      background: linear-gradient(180deg, var(--paper) 0%, #f6ead0 30%, #f0dfbf 70%, #e9d2a6 100%);
+      border-radius:12px;
+      box-shadow: 0 30px 80px var(--shadow), inset 0 1px 0 rgba(255,255,255,0.6);
+      padding:48px 56px;
+      position:relative;
+      border:6px solid rgba(0,0,0,0.06);
+      overflow:hidden;
+    }
+
+    /* decorative torn border */
+    .parchment-wrap:before{
+      content:"";position:absolute;inset:0;border-radius:12px;
+      background:linear-gradient(135deg, rgba(0,0,0,0.02), rgba(255,255,255,0.02));
+      mix-blend-mode:multiply;pointer-events:none;
+    }
+
+    /* faint paper texture */
+    .texture{position:absolute;inset:0;opacity:0.12;pointer-events:none;background-image:
+      radial-gradient(circle at 10% 20%, rgba(0,0,0,0.03) 0px, transparent 6px),
+      radial-gradient(circle at 70% 80%, rgba(0,0,0,0.02) 0px, transparent 8px);
+      background-size:30px 30px, 40px 40px;}
+
+    .crest{
+      width:var(--crest-size);height:var(--crest-size);border-radius:50%;
+      display:flex;align-items:center;justify-content:center;margin:0 auto 18px;
+      background: radial-gradient(circle at 30% 25%, #ffd66b, #e6b300 55%, #c38a00 100%);
+      box-shadow: 0 6px 20px rgba(0,0,0,0.25), inset 0 2px 0 rgba(255,255,255,0.4);
+      border:4px solid rgba(0,0,0,0.08);
+    }
+    .crest svg{width:62px;height:62px;display:block}
+
+    h1.title{font-size:1.25rem;margin:0;text-align:center;letter-spacing:0.06em;color:var(--ink);}
+    p.lead{margin:12px 0 26px;text-align:center;font-weight:600;color:#3b2b1f}
+
+    .decree{
+      background:transparent;color:var(--ink);line-height:1.62;font-size:1rem;
+      border-left:4px solid var(--edge);padding-left:18px;padding-right:6px;
+    }
+
+    .decree p{margin:0 0 12px}
+    .decree blockquote{margin:10px 0 18px;padding:12px 18px;background:linear-gradient(90deg, rgba(255,255,255,0.35), rgba(255,255,255,0.05));border-radius:8px;border:1px solid rgba(0,0,0,0.03)}
+
+    .signature{display:flex;align-items:center;justify-content:space-between;margin-top:28px}
+    .sig-left{font-size:0.95rem}
+    .sig-right{text-align:right}
+    .seal{
+      width:86px;height:86px;border-radius:50%;display:inline-grid;place-items:center;
+      background:linear-gradient(180deg,#b8860b,#9b6f06);
+      color:#fff;font-weight:700;font-size:0.85rem;padding:8px;border:3px solid rgba(0,0,0,0.12);
+      box-shadow:0 6px 18px rgba(0,0,0,0.25);
+    }
+
+    footer.note{margin-top:22px;text-align:center;font-size:0.85rem;opacity:0.85;color:#3b2b1f}
+
+    @media (max-width:420px){
+      .parchment-wrap{padding:26px}
+      :root{--crest-size:88px}
+    }
+  </style>
+</head>
+<body>
+  <div class="parchment-wrap" role="article" aria-labelledby="decreeTitle">
+    <div class="texture" aria-hidden="true"></div>
+
+    <div class="crest" aria-hidden="true">
+      <!-- simple crown svg -->
+      <svg viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
+        <path d="M8 44c6-8 8-14 12-22 4 8 6 14 12 22 6-8 8-14 12-22 4 8 6 14 12 22v6H8v-6z" fill="#4b2d00" opacity="0.08"/>
+        <path d="M6 44c1-8 8-20 12-26 4 6 8 12 10 18 2-6 6-12 10-18 4 6 11 18 12 26v8H6v-8z" fill="#f7db9a"/>
+        <circle cx="12" cy="20" r="3" fill="#c38a00"/>
+        <circle cx="32" cy="12" r="3" fill="#c38a00"/>
+        <circle cx="52" cy="20" r="3" fill="#c38a00"/>
+      </svg>
+    </div>
+
+    <h1 id="decreeTitle" class="title">The Royal Decree of Founding</h1>
+    <p class="lead">Issued Under the Grand Honour of Him the Most, His Exalted Majesty King Voncelotus I — In the Year of the Great Reformation</p>
+
+    <div class="decree">
+      <blockquote>“Let the divided lands of Dunkirk be united not by sword, nor by blood, but by the voice of its people and the wisdom of its crown.”</blockquote>
+
+      <p>By the divine grace and sovereign will of <strong>His Exalted Majesty King Voncelotus the First</strong>, Sovereign of the Dunkrikes Realm, Defender of the Honour of the Crown, and Keeper of the Crimson Seal, it is hereby proclaimed before all noble Houses and loyal citizens:</p>
+
+      <p>That a <strong>Council of the People</strong> shall be established, henceforth known as <strong>The House of Commons</strong>, wherein the voices of the realm’s faithful citizens shall be heard and weighed in just deliberation.</p>
+
+      <p>That a <strong>Council of the Nobility</strong>, henceforth called <strong>The House of Lords</strong>, shall stand as guardian of heritage, order, and the continuity of the Crown’s wisdom.</p>
+
+      <p>That both Houses shall be bound in duty and honour beneath the emblem of the <strong>Black Rod</strong>, symbol of peace and obedience, wrought from the iron of the weapons once turned against one another — that they may never again be raised in strife.</p>
+
+      <p>And that no law shall pass into the realm’s binding decree save through the harmony of both Houses, under the watchful eye of the Royal Crown.</p>
+
+      <p>Thus, by the decree and sacred hand of <strong>His Exalted Majesty King Voncelotus I</strong>, the first stones of the <strong>Dunkirk Parliament</strong> are laid, in the name of unity, reason, and eternal duty to the Realm.</p>
+
+      <p style="margin-top:18px;font-style:italic">“Where wisdom speaks, let pride be silent.”</p>
+
+      <div class="signature">
+        <div class="sig-left">
+          <div>— Signed and Sealed at the <strong>Hall of Crimson Oaks</strong></div>
+          <div style="margin-top:8px;color:#3b2b1f;opacity:0.9;font-size:0.94rem">Under the Great Banner of the Dunkrikes Realm</div>
+        </div>
+        <div class="sig-right">
+          <div class="seal">CRIMSON SEAL</div>
+          <div style="margin-top:8px;font-weight:700">King Voncelotus I</div>
+        </div>
+      </div>
+
+      <footer class="note">In commemoration of the Great Conference of Binding and the founding of the dual Houses of Parliament.</footer>
+    </div>
+  </div>
+</body>
+</html>
